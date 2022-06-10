@@ -41,7 +41,19 @@ class Queue {
    * and return its value. Should throw an error if the queue is empty. */
 
   dequeue() {
-
+    if(this.size === 0){
+      throw new Error("The queue is empty, no Node to remove.");
+    }
+    //get the current first Node
+    let oldFirstNode = this.first;
+    //set the first Node to the .next of the old first Node
+    this.first = oldFirstNode.next;
+    //change the new first Node's .next to null
+    oldFirstNode.next = null;
+    //decrement Queue size by one
+    this.size--;
+    //return the old Node
+    return oldFirstNode;
   }
 
   /** peek(): return the value of the first node in the queue. */

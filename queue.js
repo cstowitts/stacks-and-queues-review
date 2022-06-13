@@ -20,21 +20,25 @@ class Queue {
   /** enqueue(val): add new value to end of the queue. Returns undefined. */
 
   enqueue(val) {
-    let currNode = this.first;
-    const newLastNode = new Node(val);
-    //while we're looking at a valid Node in the Queue
-    while(currNode.val !== null){
-      //if the current Node is the last Node of the Queue
-      if(currNode === this.last){
-        //change its next to the new last Node
-        currNode.next = newLastNode;
-        //update the last Node in the Queue to the new last Node
-        this.last = newLastNode;
-        //update the Queue count
-        this.size++;
-      }
-      currNode = currNode.next;
+    const newNode = new Node(val);
+    //if there's nothing in the Queue, add the Node
+    //NOT operator refresher: if there is a .first then t => f and if won't go
+    //if there isn't a .first then f => t and if conditional will execute
+    if(!this.first){
+      //it's the new first and last Node so update them!
+      this.first = newNode;
+      this.last = newNode;
+      //don't forget to update the Queue size
+      this.size = 1;
+    } else {
+      //otherwise change the current last Node's .next to the new Node
+      this.last.next = newNode;
+      //set the .last property of this Queue to the new Node
+      this.last = newNode;
+      //update Queue .size
+      this.size++;
     }
+
   }
 
   /** dequeue(): remove the node from the start of the queue
@@ -44,16 +48,28 @@ class Queue {
     if(this.size === 0){
       throw new Error("The queue is empty, no Node to remove.");
     }
-    //get the current first Node
-    let oldFirstNode = this.first;
-    //set the first Node to the .next of the old first Node
-    this.first = oldFirstNode.next;
-    //change the new first Node's .next to null
-    oldFirstNode.next = null;
-    //decrement Queue size by one
-    this.size--;
-    //return the old Node
-    return oldFirstNode;
+
+    //if the .first and .last Node are the same
+    if(this.first === this.last){
+     const onlyNode = this.first;
+     this.first.val = null;
+     this.first.next = null;
+     this.last.val = null;
+     this.last.next = null;
+     this.size = 0;
+     return onlyNode; 
+    } else {
+      //get the current first Node
+      let oldFirstNode = this.first;
+      //set the first Node to the .next of the old first Node
+      this.first = oldFirstNode.next;
+      //change the new first Node's .next to null
+      oldFirstNode.next = null;
+      //decrement Queue size by one
+      this.size--;
+      //return the old Node's VALUE
+      return oldFirstNode.val;
+    }
   }
 
   /** peek(): return the value of the first node in the queue. */

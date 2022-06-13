@@ -57,7 +57,8 @@ class Queue {
      this.last.val = null;
      this.last.next = null;
      this.size = 0;
-     return onlyNode; 
+     //DON'T FORGET WE WANT THE VALUE OF THE NODE
+     return onlyNode.val; 
     } else {
       //get the current first Node
       let oldFirstNode = this.first;
@@ -78,7 +79,7 @@ class Queue {
     if(this.size === 0){
       throw new Error("The queue is empty, no first Node.");
     }
-    return this.first;
+    return this.first.val;
   }
 
   /** isEmpty(): return true if the queue is empty, otherwise false */

@@ -90,7 +90,6 @@ class Queue {
     } else {
       return false;
     }
-
   }
 }
 
